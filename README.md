@@ -15,7 +15,7 @@ For me, this is
 
 `ssh kn_pop528802@login01.binac.uni-tuebingen.de`
 
-It will ask you for your one time password. Give the password that you set. It will then ask you again for your password, for me this second entry is a second factor authentication code that I get from the Authenticator app on my phone. Finally it asks for your password again, this is the password you first gave.
+It will ask you for your one time password. For me this is a second factor authentication code that I get from the Authenticator app on my phone. Finally it asks for your password.
 
 Login nodes are [here](https://wiki.bwhpc.de/e/BinAC/Login)
 

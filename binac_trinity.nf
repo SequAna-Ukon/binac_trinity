@@ -85,7 +85,7 @@ process subsample{
 // QC of the raw reads to remove adapter sequences and remove low quality sequences
 process fastp{
     tag "fastp val: ${proportion}"
-    conda "fastp"
+    container "biocontainers/fastp:v0.20.1_cv1"
     publishDir "/home/humebc/projects/bernard_lepetit/results/fastp"
     cpus 1
 
