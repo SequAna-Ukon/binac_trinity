@@ -194,7 +194,6 @@ process trinity{
     output:
     tuple val(proportion), path("${proportion}.Trinity.fasta") into trinity_assembly_out_ch
     tuple val(proportion), path("${proportion}.gene_trans_map") into trinity_gene_trans_map_out_ch
-    path "${proportion}.collectl.dat" into trinity_metrics_out_ch
 
     script:
     // NB that the output directory for each trinity assembly must have 'trinity' in it.
