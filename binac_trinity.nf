@@ -1,6 +1,7 @@
 #!/usr/bin/env nextflow
 
-/* 
+/*
+
 The aim of this Nextflow script is 2 fold.
 1 - I want to use it to document the full work flow
     of going from multiple pairs of raw seq fastq.gz files
@@ -22,19 +23,16 @@ The original sequencing files that NY had totalled 35G worth of sequencing data.
 This is quite a lot of data so we should have plenty to get an idea of run time.
 
 I just counted the reads in 1 of her files and it contains ~45M reads.
-
-So we will work with just two of the pairs of files (so that we show the concatenation)
-but not make use of the other files.
 */
 
 // Full path to the directory containing the fastq.gz files
 raw_reads_dir = "/home/humebc/projects/20201217_yamada/raw_seq_files"
 
 // This gives us 2 pairs of read files
-raw_reads_in_ch = Channel.fromPath("${raw_reads_dir}/*_DC_*_{1,2}.fastq.gz")
+raw_reads_in_ch = Channel.fromPath("${raw_reads_dir}/*_{1,2}.fastq.gz")
 
 // The full path to the SILVA fastq.gz db that has been created by: cat SILVA_138.1_SSUParc_tax_silva_trunc.fasta.gz SILVA_138.1_LSUParc_tax_silva_trunc.fasta.gz > SILVA_138.1_SSUParc.LSUParc.tax_silva_trunc.fasta.gz
-silva_fastq_gz = file("/home/humebc/projects/bernard_lepetit/SILVA_db/SILVA_138.1_SSUParc.LSUParc.tax_silva_trunc.fasta.gz")
+silva_fastq_gz = file("/home/humebc/projects/bernard_lepetit/SILVA_db/SILVA_138.1_SSUParc.LSUParc.tax_silva_trunc.U.T.fasta.gz")
 
 // The path to the bin directory
 remove_unfixable_script = file("/home/humebc/projects/bernard_lepetit/bin/remove_unfixable.py")
@@ -83,11 +81,13 @@ process subsample{
 }
 
 // QC of the raw reads to remove adapter sequences and remove low quality sequences
+// NB it seems that fastp is using about 400% of the CPUs we are allocating.
+// As such, I will adjust cpus from 1 -> 4.
 process fastp{
     tag "fastp val: ${proportion}"
     container "biocontainers/fastp:v0.20.1_cv1"
     publishDir "/home/humebc/projects/bernard_lepetit/results/fastp"
-    cpus 1
+    cpus 4
 
     input:
     tuple val(proportion), path(r1), path(r2) from subsample_out_ch
@@ -121,11 +121,24 @@ process rcorrector{
 
     script:
     """
+    # jobscript
     run_rcorrector.pl -1 ${r1} -2 ${r2} -od . -t ${task.cpus}
+    
+    # jobscript
     python3 $remove_unfixable_script -1 reads.subsample.${proportion}.fastp.R1.cor.fq.gz -2 reads.subsample.${proportion}.fastp.R2.cor.fq.gz -s $proportion
+    
+    # can be done directly on the command line.
+    # I'm this line I'm simply renaming the file to my liking.
     mv unfixrm_reads.subsample.${proportion}.fastp.R1.cor.fq reads.subsample.${proportion}.fastp.R1.cor.unfixable_removed.fq
+    
+    # can be done directly on the command line.
+    # In this line I'm gzipping (compressing) the file. It will output a file called reads.subsample.${proportion}.fastp.R1.cor.unfixable_removed.fq.gz
     gzip reads.subsample.${proportion}.fastp.R1.cor.unfixable_removed.fq
+    
+    # can be done directly on the command line.
     mv unfixrm_reads.subsample.${proportion}.fastp.R2.cor.fq reads.subsample.${proportion}.fastp.R2.cor.unfixable_removed.fq
+    
+    # can be done directly on the command line.
     gzip reads.subsample.${proportion}.fastp.R2.cor.unfixable_removed.fq
     """
 }

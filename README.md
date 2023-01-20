@@ -167,3 +167,41 @@ Building the bowtie2 index or this database takes some time. It may be best if I
 At this point you're ready to run Trinity. The biggest difficulty with running Trinity will be to get the resource requirements right.
 
 I'll let you know when I've got a better idea of resource use.
+
+## Transfering file to and from a server
+
+IDE integrated development environment such as [Visual Studio Code](https://code.visualstudio.com/).
+
+[scp](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/) is what you will use for transfering files to and from servers.
+
+scp is always used in the same formate `scp <from> <to>`
+
+N.B. when working with directories you need to supply the `-r` flag which stands for recursive.
+
+Putting things into the server (a directory)
+e.g. `scp -r /home/benjaminhume/Documents/Bernard_raw_seq_data/01.RawData/B22/01.RawData kn_pop243393@login01.binac.uni-tuebingen.de:/beegfs/work/kn_pop243393/raw_reads`
+
+Pulling things from the server (a file)
+e.g. `scp kn_pop243393@login01.binac.uni-tuebingen.de:/beegfs/work/kn_pop243393/fastp_with_conda4.log /Users/benjaminhume/Documents/Bernard_raw_seq_data`
+
+Using [rsync](https://linuxize.com/post/how-to-use-rsync-for-local-and-remote-data-transfer-and-synchronization/) can also be very useful when doing large transfers as it allow you to pick up where you left off if the conneciton is dropped! Without having to start from scratch.
+
+rsync also uses the <from> <to> format the same as scp. But you can provide the arguments `-av` and it will allow you to continue after a connection drop.
+
+example of using cp local to local:
+`cp -r /<my_path>/raw_reads/* /<your_path>/raw_reads`
+
+## running the remove_unfixable.py script
+
+I have put the script here on BINAC: `/beegfs/work/kn_pop243393/bin/remove_unfixable.py`. You need python3 to run it. You currently have this installed in your my_first_conda_environment environment. There is a help menu! which can be accessed as: `python3 remove_unfixable.py --help`.
+
+The general format is `python3 $remove_unfixable_script -1 <path_to_read_one> -2 <path_to_read_two> -s <sample_name>`
+
+N.B. The progam will automic append `R1.cor.fq` and `R1.cor.fq` to the `<sample_name>` that you provided.
+
+## concatenation
+It is important that we concatenate the R1 and R2 files in the same sample order.
+
+e.g. `find . -type f -name "*_1.fq.gz" | sort | xargs cat > reads.R1.fastq.gz`
+
+e.g. `find . -type f -name "*_2.fq.gz" | sort | xargs cat > reads.R2.fastq.gz`
