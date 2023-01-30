@@ -205,3 +205,7 @@ It is important that we concatenate the R1 and R2 files in the same sample order
 e.g. `find . -type f -name "*_1.fq.gz" | sort | xargs cat > reads.R1.fastq.gz`
 
 e.g. `find . -type f -name "*_2.fq.gz" | sort | xargs cat > reads.R2.fastq.gz`
+
+## rcorrector
+
+The output of rcorrector will be decompressed fastq files (.fq). These will need to be gzipped: `gzip <name_of_file>`.
