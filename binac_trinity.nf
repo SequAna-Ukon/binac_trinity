@@ -26,10 +26,11 @@ I just counted the reads in 1 of her files and it contains ~45M reads.
 */
 
 // Full path to the directory containing the fastq.gz files
-raw_reads_dir = "/home/humebc/projects/20201217_yamada/raw_seq_files"
+raw_reads_dir = "/home/humebc/projects/bernard_lepetit/raw_reads/01.RawData"
 
 // This gives us 2 pairs of read files
-raw_reads_in_ch = Channel.fromPath("${raw_reads_dir}/*_{1,2}.fastq.gz")
+raw_reads_in_ch = Channel.fromPath("${raw_reads_dir}/**/*_{1,2}.fq.gz")
+
 
 // The full path to the SILVA fastq.gz db that has been created by: cat SILVA_138.1_SSUParc_tax_silva_trunc.fasta.gz SILVA_138.1_LSUParc_tax_silva_trunc.fasta.gz > SILVA_138.1_SSUParc.LSUParc.tax_silva_trunc.fasta.gz
 silva_fastq_gz = file("/home/humebc/projects/bernard_lepetit/SILVA_db/SILVA_138.1_SSUParc.LSUParc.tax_silva_trunc.U.T.fasta.gz")
@@ -53,8 +54,8 @@ process concatenate_fasta{
 
     script:
     """
-    find -L . -type f -name "*_1.fastq.gz" | sort | xargs cat > reads.R1.fastq.gz
-    find -L . -type f -name "*_2.fastq.gz" | sort | xargs cat > reads.R2.fastq.gz
+    find -L . -type f -name "*_1.fq.gz" | sort | xargs cat > reads.R1.fastq.gz
+    find -L . -type f -name "*_2.fq.gz" | sort | xargs cat > reads.R2.fastq.gz
     """
 }
 
@@ -67,7 +68,7 @@ process subsample{
     cpus 1
 
     input:
-    each proportion from Channel.fromList([1000000, 10000000, 50000000])
+    each proportion from Channel.fromList([1000000, 10000000, 50000000, 200000000, 1])
     tuple path(r1), path(r2) from concatenate_out_ch
 
     output:
@@ -75,8 +76,16 @@ process subsample{
 
     script:
     """
-    seqtk sample -s100 $r1 ${proportion} | gzip > reads.raw.subsample.${proportion}.R1.fastq.gz
-    seqtk sample -s100 $r2 ${proportion} | gzip > reads.raw.subsample.${proportion}.R2.fastq.gz
+    if [ $proportion -ne 1 ]
+    then
+        echo subsample_was_run >> subsample_was_run
+        seqtk sample -s100 $r1 ${proportion} | gzip > reads.raw.subsample.${proportion}.R1.fastq.gz
+        seqtk sample -s100 $r2 ${proportion} | gzip > reads.raw.subsample.${proportion}.R2.fastq.gz
+    else
+        echo copy_was_run >> copy_was_run
+        cp $r1 reads.raw.subsample.${proportion}.R1.fastq.gz
+        cp $r2 reads.raw.subsample.${proportion}.R2.fastq.gz
+    fi
     """
 }
 
@@ -87,7 +96,7 @@ process fastp{
     tag "fastp val: ${proportion}"
     container "biocontainers/fastp:v0.20.1_cv1"
     publishDir "/home/humebc/projects/bernard_lepetit/results/fastp"
-    cpus 4
+    cpus 28
 
     input:
     tuple val(proportion), path(r1), path(r2) from subsample_out_ch
@@ -98,7 +107,7 @@ process fastp{
 
     script:
     """
-    fastp -q 20 -i $r1 -I $r2 -o reads.subsample.${proportion}.fastp.R1.fastq.gz -O reads.subsample.${proportion}.fastp.R2.fastq.gz
+    fastp -w 26 -q 20 -i $r1 -I $r2 -o reads.subsample.${proportion}.fastp.R1.fastq.gz -O reads.subsample.${proportion}.fastp.R2.fastq.gz
     mv fastp.html subsample.${proportion}.fastp.html
     """
 }
