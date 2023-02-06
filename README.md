@@ -161,6 +161,12 @@ This can be acheived by mapping the reads to an rRNA database such as the SILVA 
 
 Its best to be conservative and only keep those reads in which neither of the pair mapped to the SILVA db reads.
 
+By default the SILVA fastq file have U instead of T in them. All the U s need to be replaced with T s. You can do this using sed:
+
+As an example, if the SILVA file is called test.fasta.gz then you could use sed like:
+
+`gzip -cd test.fasta.gz | sed '/^>/! s/[Uu]/T/g' | gzip > test.T.U.fasta.gz`
+
 Building the bowtie2 index or this database takes some time. It may be best if I provide you with the index. Let's discuss.
 
 ## Trinity
