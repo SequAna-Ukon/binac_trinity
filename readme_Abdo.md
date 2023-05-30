@@ -16,3 +16,20 @@
 - Try using TransRate. TransRate generates a number of useful statistics for evaluating your transcriptome assembly. Read about TransRate here: http://genome.cshlp.org/content/26/8/1134. Note that certain statistics may be biased against the large numbers of transcripts that are very lowly expressed. Consider generating TransRate statistics for your transcriptome before and after applying a minimum expression-based filter.
 
 - Explore rnaQUAST a quality assessment tool for de novo transcriptome assemblies.
+
+## Downstream Analyses
+
+### Predict coding sequences
+
+long_orf = 'TransDecoder.LongOrfs -t trinity_out_dir.Trinity.fasta'
+predict_coding_seq = 'TransDecoder.Predict -t trinity_out_dir.Trinity.fasta'
+convert_from_gff_to_gtf = 'agat_convert_sp_gff2gtf.pl -gff trinity_out_dir.Trinity.fasta.transdecoder.gff3 -o trinity_out_dir.Trinity.fasta.transdecoder_agat.gtf'
+
+### Transcript Quantification
+
+STAR --runMode genomeGenerate --runThreadN 30 --genomeDir trinity_out_dir' \
+                 '  --genomeFastaFiles trinity_out_dir.Trinity.fasta --genomeSAindexNbases 10' \
+                 ' --sjdbGTFfile trinity_out_dir.Trinity.fasta.transdecoder_agat.gtf
+ 
+stringtie %s.sorted.bamAligned.sortedByCoord.out.bam -p 30 -G trinity_out_dir.Trinity.fasta.transdecoder_agat.gtf -e -o %s.gtf -A %s.gene_abundances.tsv
+
