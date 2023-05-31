@@ -84,15 +84,19 @@ condition2    condition2_R3
 
 #### edgeR
 
+````bash
 run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes/trans
-
+````
 
 #### DESeq2
 
+````bash
 run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes/trans
-
-#### subsetting 
+````
+#### subsetting DE
 
 - for edgeR and DESeq2 and with 4 fold of chaneg and Pvalue 0.05 
 
+````bash
 analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples fig_DE.txt -P 0.05 -C 2
+````
