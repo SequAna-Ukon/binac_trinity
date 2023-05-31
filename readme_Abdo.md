@@ -9,7 +9,7 @@
 while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${1}_1.fq.gz -I raw_reads/raw_seq_data/$i/${i}_2.fq.gz -o trim_reads/$i_1.trim.fq.gz -O trim_reads/$i_2.trim.fq.gz;done < samples.txt
 ````
 
-## Transcriptome Assembly Quality Assessment (any of the following)
+## Transcriptome Assembly Quality Assessment
 -- needs to install star, busco and trinity
 
 - Examine the RNA-Seq read representation of the assembly. Ideally, at least ~80% of your input RNA-Seq reads are represented by your transcriptome assembly. The remaining unassembled reads likely corresponds to lowly expressed transcripts with insufficient coverage to enable assembly, or are low quality or aberrant reads. (will already go through after star alignments)
