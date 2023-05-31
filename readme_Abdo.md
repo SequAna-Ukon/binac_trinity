@@ -44,7 +44,7 @@ busco  -i Trinity.fasta -m transcriptome --cpu 20 -l eukaryota_odb10 -o busco_eu
 
 ````bash
 TransDecoder.LongOrfs -t Trinity.fasta
-TransDecoder.Predict -t Trinity.fasta'
+TransDecoder.Predict -t Trinity.fasta
 #convert_from_gff_to_gtf (because star and stringtie reuired gtf)
 agat_convert_sp_gff2gtf.pl -gff Trinity.fasta.transdecoder.gff3 -o Trinity.fasta.transdecoder_agat.gtf
 ````
