@@ -1,6 +1,15 @@
 # down-stream Trinity de-novo assembly on BINAC
 
-## Transcriptome Assembly Quality Assessment
+- we follow the downstream analyses in https://github.com/vondrakt/de_novo_RNA-seq_analysis,based on the Trinity assembly done by Ben. 
+- i found out that the tuterial read me is defferent that actual pipeline setup, will change it later.
+- we will follow the startgy that i develop the command the Bernard run it on BINAC, the tools will installed one by one on mamba enviroment 
+- we repaeated the fastp since the individual cleaned reads files are missing from the Ben's nextflow:
+
+````bash
+while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${1}_1.fq.gz -I raw_reads/raw_seq_data/$i/${i}_2.fq.gz -o trim_reads/$i_1.trim.fq.gz -O trim_reads/$i_2.trim.fq.gz;done < samples.txt
+````
+
+## Transcriptome Assembly Quality Assessment (any of the following)
 
 
 - Examine the RNA-Seq read representation of the assembly. Ideally, at least ~80% of your input RNA-Seq reads are represented by your transcriptome assembly. The remaining unassembled reads likely corresponds to lowly expressed transcripts with insufficient coverage to enable assembly, or are low quality or aberrant reads.
