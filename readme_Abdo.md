@@ -63,4 +63,36 @@ while read i;do STAR --genomeDir Trinity_index --runThreadN 30 --readFilesIn tri
 
 ````bash
 while read i;do stringtie $i.sorted.bam -p 30 -G Trinity.fasta.transdecoder_agat.gtf -e -o $i.gtf -A $i.gene_abundances.tsv;done < samples.txt
+
+prepDE.py -i prepDE_samples.txt
 ````
+- The configuration "prepDE_samples.txt" file must be in format:
+sample1 path_to_sample1.gtf 
+sample2 path_to_sample2.gtf 
+sample3 path_to_sample3.gtf
+
+### DE analysis (following Trinotate)
+-- install Trinotate
+
+- The configuration file "fig_DE.txt" for the DE analysis must be in format
+condition1    condition1_R1
+condition1    condition1_R2
+condition1    condition1_R3
+condition2    condition2_R1
+condition2    condition2_R2
+condition2    condition2_R3
+
+#### edgeR
+
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes/trans
+
+
+#### DESeq2
+
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes/trans
+
+#### subsetting 
+
+- for edgeR and DESeq2 and with 4 fold of chaneg and Pvalue 0.05 
+
+analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples fig_DE.txt -P 0.05 -C 2
