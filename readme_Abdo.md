@@ -19,10 +19,10 @@ while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${i}_1.fq.gz -I r
 - Compute the E90N50 transcript contig length - the contig N50 value based on the set of transcripts representing 90% of the expression data. for more details (https://github.com/trinityrnaseq/trinityrnaseq/wiki/Transcriptome-Contig-Nx-and-ExN50-stats)
 
 ````bash
-TrinityStats.pl  Trinity.fasta
+TrinityStats.pl  1.Trinity.fasta
 or 
 #after the quantification
-contig_ExN50_statistic.pl transcripts.TMM.EXPR.matrix Trinity.fasta transcript | tee ExN50.transcript.stats
+contig_ExN50_statistic.pl transcripts.TMM.EXPR.matrix 1.Trinity.fasta transcript | tee ExN50.transcript.stats
 ````
 
 - Use BUSCO to explore completeness according to conserved ortholog content. 
@@ -30,12 +30,18 @@ contig_ExN50_statistic.pl transcripts.TMM.EXPR.matrix Trinity.fasta transcript |
 #assuming we working with diatoms
 
 ````bash
-busco  -i Trinity.fasta -m transcriptome  --cpu 20 -l stramenopiles_odb10 -o busco_stramenopiles
+busco  -i 1.Trinity.fasta -m transcriptome  --cpu 20 -l stramenopiles_odb10 -o busco_stramenopiles
 and 
-busco  -i Trinity.fasta -m transcriptome --cpu 20 -l eukaryota_odb10 -o busco_eukaryota
+busco  -i 1.Trinity.fasta -m transcriptome --cpu 20 -l eukaryota_odb10 -o busco_eukaryota
 ````
 
 #we can run it on the Predict coding sequences as well (better)
+
+````bash
+busco  -i 1.Trinity.fasta.transdecoder.pep -m protein  --cpu 20 -l stramenopiles_odb10 -o busco_pp_stramenopiles
+and 
+busco  -i 1.Trinity.fasta.transdecoder.pep -m protein --cpu 20 -l eukaryota_odb10 -o busco_pp_eukaryota
+````
 
 ## Downstream Analyses
 
@@ -46,7 +52,7 @@ busco  -i Trinity.fasta -m transcriptome --cpu 20 -l eukaryota_odb10 -o busco_eu
 TransDecoder.LongOrfs -t Trinity.fasta
 TransDecoder.Predict -t Trinity.fasta
 #convert_from_gff_to_gtf (because star and stringtie reuired gtf)
-agat_convert_sp_gff2gtf.pl -gff Trinity.fasta.transdecoder.gff3 -o Trinity.fasta.transdecoder_agat.gtf
+agat_convert_sp_gff2gtf.pl -gff 1.Trinity.fasta.transdecoder.gff3 -o Trinity.fasta.transdecoder_agat.gtf
 ````
 
 ### Transcript mapping
