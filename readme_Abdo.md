@@ -6,7 +6,7 @@
 - we repaeated the fastp since the individual cleaned reads files are missing from the Ben's nextflow:
 
 ````bash
-while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${i}_1.fq.gz -I raw_reads/raw_seq_data/$i/${i}_2.fq.gz -o trim_reads/${i}_1.trim.fq.gz -O trim_reads/${i}_2.trim.fq.gz;done < samples.txt
+while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${i}_1.fq.gz -I raw_reads/raw_seq_data/$i/${i}_2.fq.gz -o trim_reads/${i}_1.trim.fq.gz -O trim_reads/${i}_2.trim.fq.gz && rm trim_reads/fastp.html trim_reads/$i.html;done < samples.txt
 ````
 
 ## Transcriptome Assembly Quality Assessment
