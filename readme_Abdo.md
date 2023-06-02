@@ -61,7 +61,7 @@ star=2.7.10 was installed
 ````bash
 STAR --runMode genomeGenerate --runThreadN 30 --genomeDir trinity_index --genomeFastaFiles Trinity.fasta --genomeSAindexNbases 10 --sjdbGTFfile Trinity.fasta.transdecoder_agat.gtf
 
-while read i;do STAR --genomeDir Trinity_index --runThreadN 30 --readFilesIn trim_reads/$i_1.trim.fq.gz trim_reads/$i_2.trim.fq.gz--readFilesCommand zcat --quantMode GeneCounts --outFileNamePrefix $i.sorted.bam --outSAMtype BAM SortedByCoordinate;done < samples.txt 
+while read i;do STAR --genomeDir Trinity_index --runThreadN 30 --readFilesIn trim_reads/${i}_1.trim.fq.gz trim_reads/${i}_2.trim.fq.gz --readFilesCommand zcat --quantMode GeneCounts --outFileNamePrefix $i.sorted.bam --outSAMtype BAM SortedByCoordinate;done < samples.txt 
 ````
 
 ### Transcript Quantification
