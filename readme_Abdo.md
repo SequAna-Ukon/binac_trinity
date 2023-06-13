@@ -73,8 +73,11 @@ while read i;do stringtie $i.sorted.bam -p 30 -G Trinity.fasta.transdecoder_agat
 prepDE.py -i prepDE_samples.txt
 ````
 - The configuration "prepDE_samples.txt" file must be in format:
-sample1 path_to_sample1.gtf 
+
+sample1 path_to_sample1.gtf
+
 sample2 path_to_sample2.gtf 
+
 sample3 path_to_sample3.gtf
 
 ### DE analysis (following Trinotate)
@@ -82,10 +85,15 @@ sample3 path_to_sample3.gtf
 
 - The configuration file "fig_DE.txt" for the DE analysis must be in format
 condition1    condition1_R1
+
 condition1    condition1_R2
+
 condition1    condition1_R3
+
 condition2    condition2_R1
+
 condition2    condition2_R2
+
 condition2    condition2_R3
 
 #### edgeR
