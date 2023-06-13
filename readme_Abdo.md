@@ -74,43 +74,43 @@ prepDE.py -i prepDE_samples.txt
 ````
 - The configuration "prepDE_samples.txt" file must be in format:
 
-sample1 path_to_sample1.gtf
+sample1[tab]path_to_sample1.gtf
 
-sample2 path_to_sample2.gtf 
+sample2[tab]path_to_sample2.gtf 
 
-sample3 path_to_sample3.gtf
+sample3[tab]path_to_sample3.gtf
 
 ### DE analysis (following Trinotate)
 -- install Trinotate
 
-- The configuration file "fig_DE.txt" for the DE analysis must be in format
-condition1    condition1_R1
+- The configuration file "config_DE.txt" for the DE analysis must be in format
+condition1[tab]condition1_R1
 
-condition1    condition1_R2
+condition1[tab]condition1_R2
 
-condition1    condition1_R3
+condition1[tab]condition1_R3
 
-condition2    condition2_R1
+condition2[tab]condition2_R1
 
-condition2    condition2_R2
+condition2[tab]condition2_R2
 
-condition2    condition2_R3
+condition2[tab]condition2_R3
 
 #### edgeR
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes/trans
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes/trans
 ````
 
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file fig_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes/trans
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes/trans
 ````
 #### subsetting DE
 
 - for edgeR and DESeq2 and with 4 fold of chaneg and Pvalue 0.05 
 
 ````bash
-analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples fig_DE.txt -P 0.05 -C 2
+analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -P 0.05 -C 2
 ````
