@@ -126,3 +126,18 @@ analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -
 
 
 ### Trinotate Functional Annotation
+
+#will using Trinotate through singularity
+
+````bash
+wget https://data.broadinstitute.org/Trinity/TRINOTATE_SINGULARITY/trinotate.v4.0.1.simg
+singularity shell -e trinotate.v4.0.1.simg  
+export TRINOTATE_HOME=/usr/local/src/Trinotate
+$TRINOTATE_HOME/Trinotate
+````
+#TMHMM and  signalp installed sepra.
+pip3 install pybiolib
+biolib run --local DTU/DeepTMHMM --fasta input.fasta
+
+https://github.com/fteufel/signalp-6.0/blob/main/installation_instructions.md
+
