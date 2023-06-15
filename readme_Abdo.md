@@ -42,6 +42,11 @@ busco  -i 1.Trinity.fasta.transdecoder.pep -m protein  --cpu 20 -l stramenopiles
 and 
 busco  -i 1.Trinity.fasta.transdecoder.pep -m protein --cpu 20 -l eukaryota_odb10 -o busco_pp_eukaryota
 ````
+#plotting busco report
+
+mkdir busco_plot
+cp busco_pp_eukaryota/short*.txt busco_eukaryota/short*.txt busco_stramenopiles/short*.txt busco_pp_stramenopiles/short*.txt
+generate_plot.py -wd busco_plot/
 
 ## Downstream Analyses
 
@@ -70,7 +75,9 @@ while read i;do STAR --genomeDir Trinity_index --runThreadN 30 --readFilesIn tri
 ````bash
 while read i;do stringtie $i.sorted.bam -p 30 -G Trinity.fasta.transdecoder_agat.gtf -e -o $i.gtf -A $i.gene_abundances.tsv;done < samples.txt
 
-prepDE.py -i prepDE_samples.txt
+wget https://ccb.jhu.edu/software/stringtie/dl/prepDE.py3 
+
+python3 prepDE.py3 -i prepDE_samples.txt
 ````
 - The configuration "prepDE_samples.txt" file must be in format:
 
@@ -84,17 +91,19 @@ sample3[tab]path_to_sample3.gtf
 -- install Trinotate
 
 - The configuration file "config_DE.txt" for the DE analysis must be in format
-condition1[tab]condition1_R1
 
-condition1[tab]condition1_R2
+condition1[tab]sample1
 
-condition1[tab]condition1_R3
+condition1[tab]sample2
 
-condition2[tab]condition2_R1
+condition1[tab]sample3
 
-condition2[tab]condition2_R2
+condition2[tab]sample4
 
-condition2[tab]condition2_R3
+condition2[tab]sample5
+
+condition2[tab]sample6
+
 
 #### edgeR
 
