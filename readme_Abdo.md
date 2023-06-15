@@ -123,3 +123,6 @@ run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv
 ````bash
 analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -P 0.05 -C 2
 ````
+
+
+### Trinotate Functional Annotation
