@@ -73,7 +73,7 @@ while read i;do STAR --genomeDir Trinity_index --runThreadN 30 --readFilesIn tri
 -- install stringtie2
 
 ````bash
-while read i;do stringtie $i.bam -p 30 -G Trinity.fasta.transdecoder_agat.gtf -e -o $i.gtf -A $i.gene_abundances.tsv;done < samples.txt
+while read i;do stringtie $i.sorted.bamAligned.sortedByCoord.out.bam -p 28 -G 1.Trinity.fasta.transdecoder_agat.gtf -e -o $i.gtf -A $i.gene_abundances.tsv;done < samples.txt
 
 wget https://ccb.jhu.edu/software/stringtie/dl/prepDE.py3 
 
