@@ -12,7 +12,7 @@ seqtk sample -s100 reads.R2.fastq.gz 10000 | gzip > reads_sub10k.R2.fastq.gz
 
 ````bash
 mmseqs createdb reads_sub10k.R1.fastq.gz reads_sub10k.R2.fastq.gz reads_DB --dbtype 2
-mmseqs taxonomy  reads_DB /share/databases/mmseqs2_20221212/NT/nt.fnaDB taxonomyResult tmp --threads 100 -s 7.0 --search-type 2
+mmseqs taxonomy  reads_DB /share/databases/mmseqs2_20221212/NT/nt.fnaDB taxonomyResult tmp --threads 100 -s 7.0 --search-type 2 --lca-mode 4 --orf-filter 0
 mmseqs createtsv reads_DB taxonomyResult Bernard_tsv
 mmseqs taxonomyreport ${params.mmseqs_nt_path} taxonomyResult Bernard.report
 mmseqs taxonomyreport ${params.mmseqs_nt_path} taxonomyResult Bernard.html --report-mode 1
