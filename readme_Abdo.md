@@ -111,7 +111,7 @@ sample3[tab]path_to_sample3.gtf
 ### DE analysis (following Trinotate)
 -- install Trinotate
 
-- The configuration file "config_DE.txt" for the DE analysis must be in format
+- The configuration file "config_DE.txt" for the DE analysis must be in a format:
 
 condition1[tab]sample1
 
@@ -125,7 +125,12 @@ condition2[tab]sample5
 
 condition2[tab]sample6
 
-
+- convert the matrix from csv to tsv
+````bash
+sed 's/,/\t/g' gene_count_matrix.csv > gene_count_matrix.tsv
+OR
+sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count_matrix.tsv
+````
 #### edgeR
 
 ````bash
