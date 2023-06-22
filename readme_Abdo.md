@@ -8,15 +8,15 @@ implement some taxonomic checks to see that we are working with the orgnisms tha
 seqtk sample -s100 reads.R1.fastq.gz 10000 | gzip > reads_sub10k.R1.fastq.gz
 seqtk sample -s100 reads.R2.fastq.gz 10000 | gzip > reads_sub10k.R2.fastq.gz
 ````
-- Taxonomy profilling using  mmseqs2 14.7e284 against nt database
+- Taxonomy profiling using  kraken2 against nt database
 
 ````bash
-mmseqs createdb reads_sub10k.R1.fastq.gz reads_sub10k.R2.fastq.gz reads_DB --dbtype 2
-mmseqs taxonomy  reads_DB /share/databases/mmseqs2_20221212/NT/nt.fnaDB taxonomyResult tmp --threads 100 -s 7.0 --search-type 2 --lca-mode 4 --orf-filter 0
-mmseqs createtsv reads_DB taxonomyResult Bernard_tsv
-mmseqs taxonomyreport ${params.mmseqs_nt_path} taxonomyResult Bernard.report
-mmseqs taxonomyreport ${params.mmseqs_nt_path} taxonomyResult Bernard.html --report-mode 1
-rm -r tmp
+#To resolve the error "rsync_from_ncbi.pl: unexpected FTP path (new server?)", just replace in the file "libexec/rsync_from_ncbi.pl " "^ftp://" by "^https:// " in line 46.
+
+kraken2-build --threads 16 --download-taxonomy --db kraken_nt
+kraken2-build --threads 16 --download-library nt --db kraken_nt
+kraken2-build --build --threads 16 --db kraken_nt
+kraken2 --db kraken_nt --threads 30 --report kraken2_report.tsv --paired reads_sub10k.R1.fastq.gz  reads_sub10k.R2.fastq.gz > /dev/null
 
 ````
 
