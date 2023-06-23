@@ -134,17 +134,17 @@ sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count_matrix.tsv
 #### edgeR
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes/trans
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
 ````
 
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes/trans
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes
 ````
 #### subsetting DE
 
-- for edgeR and DESeq2 and with 4 fold of chaneg and Pvalue 0.05 
+- for edgeR and DESeq2 and with 4 fold of change and Pvalue 0.05 
 
 ````bash
 analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -P 0.05 -C 2
