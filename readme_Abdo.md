@@ -140,7 +140,7 @@ run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method DESeq2 --output DESeq2_genes
+run_DE_analysis.pl --matrix gene_count_matrix.tsv  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
 ````
 #### subsetting DE
 
@@ -153,7 +153,7 @@ analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -
 
 ### Trinotate Functional Annotation
 
-#will using Trinotate through singularity
+#will be using Trinotate through singularity
 
 ````bash
 wget https://data.broadinstitute.org/Trinity/TRINOTATE_SINGULARITY/trinotate.v4.0.1.simg
