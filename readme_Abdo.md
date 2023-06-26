@@ -133,10 +133,14 @@ sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 ````
 #### edgeR
 - Tips before run the analysis:
+  
 -	Create and activate new environment
+  
 -	Install latest R:
+
 mamba install r-base=4.2.2
 -	Install BiocManager:
+  
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
  	
@@ -145,6 +149,8 @@ BiocManager::install(c("edgeR", "limma", "DESeq2", "ctc", "Biobase", "gplots", "
 BiocManager::install("cluster")
 
 BiocManager::install("qvalue")
+
+BiocManager::install("fastcluster")
 
 -	Validate that DESeq2 and edgeR are working:
 library(DESeq2)
