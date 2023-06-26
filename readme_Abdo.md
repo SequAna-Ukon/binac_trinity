@@ -146,6 +146,7 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install(c("edgeR", "limma", "DESeq2", "ctc", "gplots", "ape", "argparse", "cluster", "value", "fastcluster", "Biobase"))
 
 -	Validate that DESeq2 and edgeR are working:
+
 library(DESeq2)
 
 library(edgeR)
