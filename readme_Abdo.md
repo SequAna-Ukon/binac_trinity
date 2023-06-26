@@ -131,8 +131,7 @@ sed 's/,/\t/g' gene_count_matrix.csv > gene_count.matrix
 OR
 sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 ````
-#### edgeR
-- Tips before run the analysis:
+#### Tips before run the analysis:
   
 -	Create and activate new environment
   
@@ -151,6 +150,8 @@ library(DESeq2)
 
 library(edgeR)
  
+#### edgeR
+
 
 ````bash
 run_DE_analysis.pl --matrix gene_count.matrix or transcript_count.matrix --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
