@@ -127,9 +127,9 @@ condition2[tab]sample6
 
 - convert the matrix from csv to tsv
 ````bash
-sed 's/,/\t/g' gene_count_matrix.csv > gene_count_matrix.tsv
+sed 's/,/\t/g' gene_count_matrix.csv > gene_count.matrix
 OR
-sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count_matrix.tsv
+sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 ````
 #### edgeR
 - Tips before run the analysis:
@@ -139,31 +139,29 @@ mamba install r-base=4.3.0
 -	Install BiocManager:
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
--	Install DESeq2:
-BiocManager::install("DESeq2")
--	Install edgeR:
-BiocManager::install("edgeR")
+BiocManager::install(c("edgeR", "limma", "DESeq2", "ctc", "Biobase", "gplots", "ape", "argparse"))
+BiocManager::install("cluster")
+
 -	Validate that DESeq2 and edgeR are woking:
 library(DESeq2)
 library(edgeR)
-- rename tsv to csv file:
-rm gene_count_matrix.csv
-mv gene_count_matrix.tsv gene_count_matrix.csv 
+ 
+
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.csv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
+run_DE_analysis.pl --matrix gene_count.matrix or transcript_count.matrix --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
 ````
 
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
+run_DE_analysis.pl --matrix gene_count.matrix  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
 ````
 #### subsetting DE
 
 - for edgeR and DESeq2 and with 4 fold of change and Pvalue 0.05 
 
 ````bash
-analyze_diff_expr.pl --matrix ../gene_count_matrix.tsv --samples config_DE.txt -P 0.05 -C 2
+analyze_diff_expr.pl --matrix ../gene_count.matrix --samples ../config_DE.txt -P 0.05 -C 2
 ````
 
 
