@@ -109,9 +109,9 @@ sample2[tab]path_to_sample2.gtf
 sample3[tab]path_to_sample3.gtf
 
 ### DE analysis (following Trinotate)
--- install Trinotate
+-- install trinity=v2.15.1
 
-- The configuration file "config_DE.txt" for the DE analysis must be in a format:
+- The configuration file "config_DE.txt" for the DE analysis must be in the format:
 
 condition1[tab]sample1
 
