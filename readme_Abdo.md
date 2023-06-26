@@ -146,9 +146,11 @@ BiocManager::install("edgeR")
 -	Validate that DESeq2 and edgeR are woking:
 library(DESeq2)
 library(edgeR)
-
+- rename tsv to csv file:
+rm gene_count_matrix.csv
+mv gene_count_matrix.tsv gene_count_matrix.csv 
 ````bash
-run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
+run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.csv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
 ````
 
 #### DESeq2
