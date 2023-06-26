@@ -141,6 +141,7 @@ if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install(c("edgeR", "limma", "DESeq2", "ctc", "Biobase", "gplots", "ape", "argparse"))
 BiocManager::install("cluster")
+BiocManager::install("qvalue")
 
 -	Validate that DESeq2 and edgeR are woking:
 library(DESeq2)
