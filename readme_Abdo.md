@@ -132,6 +132,20 @@ OR
 sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count_matrix.tsv
 ````
 #### edgeR
+- Tips before run the analysis:
+-	Create and activate new environment
+-	Install latest R:
+mamba install r-base=4.3.0
+-	Install BiocManager:
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+-	Install DESeq2:
+BiocManager::install("DESeq2")
+-	Install edgeR:
+BiocManager::install("edgeR")
+-	Validate that DESeq2 and edgeR are woking:
+library(DESeq2)
+library(edgeR)
 
 ````bash
 run_DE_analysis.pl --matrix gene_count_matrix.tsv or transcript_count_matrix.tsv --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
