@@ -1,6 +1,6 @@
 # down-stream Trinity de-novo assembly on BINAC
-## Taxonomy profilling for reads
-implement some taxonomic checks to see that we are working with the orgnisms that we expect An mmseqs taxonomy database has been create as per section "Taxonomy assignment" of:https://mmseqs.com/latest/userguide.pdf
+## Taxonomy profiling for reads
+implement some taxonomic checks to see that we are working with the organisms that we expect An mmseqs taxonomy database has been created as per section "Taxonomy assignment" of:https://mmseqs.com/latest/userguide.pdf
 - concatenate reads from Ben's pipeline were used
 - concatenate reads were sub-sampled for 10K reads
 
@@ -138,20 +138,29 @@ sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 -	Install latest R:
 
 mamba install r-base=4.2.2
+
 mamba install -c conda-forge r-curl
+
 - Start R:
 R
+
 -	Install BiocManager:
   
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
  	
 install.packages("survival")
+
 BiocManager::install("DESeq2")
+
 BiocManager::install("edgeR")
+
 BiocManager::install("cluster")
+
 BiocManager::install("qvalue")
+
 BiocManager::install("fastcluster")
+
 BiocManager::install("Biobase")
 
 -	Validate that DESeq2 and edgeR are working:
@@ -162,7 +171,15 @@ library(edgeR)
 
 - Exit R:
 Ctrl+D
- 
+
+- download the latest Trinity from GitHub  
+
+git clone https://github.com/trinityrnaseq/trinityrnaseq.git
+
+- export the path for the Trinity scripts
+
+export PATH=$PATH:trinityrnaseq/Analysis/DifferentialExpression/
+
 #### edgeR
 
 
