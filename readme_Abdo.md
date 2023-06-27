@@ -138,12 +138,19 @@ sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 -	Install latest R:
 
 mamba install r-base=4.2.2
+mamba install -c conda-forge r-curl
 -	Install BiocManager:
   
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
  	
-BiocManager::install(c("edgeR", "limma", "DESeq2", "ctc", "gplots", "ape", "argparse", "cluster", "value", "fastcluster", "Biobase"))
+install.packages("survival")
+BiocManager::install("DESeq2")
+BiocManager::install("edgeR")
+BiocManager::install("cluster")
+BiocManager::install("qvalue")
+BiocManager::install("fastcluster")
+BiocManager::install("Biobase")
 
 -	Validate that DESeq2 and edgeR are working:
 
