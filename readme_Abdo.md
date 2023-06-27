@@ -139,6 +139,8 @@ sed 's/,/\t/g' transcript_count_matrix.csv > transcript_count.matrix
 
 mamba install r-base=4.2.2
 mamba install -c conda-forge r-curl
+- Start R:
+  R
 -	Install BiocManager:
   
 if (!require("BiocManager", quietly = TRUE))
@@ -157,6 +159,9 @@ BiocManager::install("Biobase")
 library(DESeq2)
 
 library(edgeR)
+
+Exit R:
+Ctrl+D
  
 #### edgeR
 
