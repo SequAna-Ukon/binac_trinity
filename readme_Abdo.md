@@ -184,7 +184,7 @@ export PATH=$PATH:trinityrnaseq/Analysis/DifferentialExpression/
 
 
 ````bash
-run_DE_analysis.pl --matrix gene_count.matrix or transcript_count.matrix --samples_file config_DE.txt --reference_sample condition? --method edgeR --output edgeR_genes
+run_DE_analysis.pl --matrix gene_count.matrix --samples_file config_DE.txt --reference_sample T0 --method edgeR --output edgeR_genes
 ````
 
 #### DESeq2
@@ -197,6 +197,7 @@ run_DE_analysis.pl --matrix gene_count.matrix  --samples_file config_DE.txt --re
 - for edgeR and DESeq2 and with 4 fold of change and Pvalue 0.05 
 
 ````bash
+cd DESeq2_genes
 analyze_diff_expr.pl --matrix ../gene_count.matrix --samples ../config_DE.txt -P 0.05 -C 2
 ````
 
