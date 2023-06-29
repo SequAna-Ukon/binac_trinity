@@ -20,10 +20,9 @@ sort -k4,4 -k2,2rn kraken2_report.tsv  | grep G | head
 
 #krona
 
-ktUpdateTaxonomy.sh --only-build kraken2/silva/taxonomy/
+ktUpdateTaxonomy.sh --only-build /share/databases/k2_nt/taxonomy/
 
-ktImportTaxonomy -o krona_report.html -t 5 -m 3 -tax kraken2/silva/taxonomy/ kraken2_report_trimmed_paired.tsv
-
+ktImportTaxonomy -o krona_report.html -t 5 -m 3 -tax /share/databases/k2_nt/taxonomy/ kraken2_report.tsv 
 ````
 
 
@@ -190,13 +189,13 @@ export PATH=$PATH:trinityrnaseq/Analysis/DifferentialExpression/
 
 
 ````bash
-run_DE_analysis.pl --matrix transcript_count.matrix --samples_file config_DE.txt --reference_sample T0 --method edgeR --output edgeR_genes
+run_DE_analysis.pl --matrix transcript_count.matrix --samples_file config_DE.txt --reference_sample T0 --method edgeR --output edgeR_transcript
 ````
 
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix transcript_count.matrix  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
+run_DE_analysis.pl --matrix transcript_count.matrix  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_transcript
 ````
 #### subsetting DE
 
