@@ -11,12 +11,18 @@ seqtk sample -s100 reads.R2.fastq.gz 10000 | gzip > reads_sub10k.R2.fastq.gz
 - Taxonomy profiling using  kraken2 against nt database
 
 ````bash
-#To resolve the error "rsync_from_ncbi.pl: unexpected FTP path (new server?)", just replace in the file "libexec/rsync_from_ncbi.pl " "^ftp://" by "^https:// " in line 46.
-
+#download indexed database from indexs zone
 kraken2-build --threads 16 --download-taxonomy --db kraken_nt
 kraken2-build --threads 16 --download-library nt --db kraken_nt
 kraken2-build --build --threads 16 --db kraken_nt
 kraken2 --db kraken_nt --threads 30 --report kraken2_report.tsv --paired reads_sub10k.R1.fastq.gz  reads_sub10k.R2.fastq.gz > /dev/null
+sort -k4,4 -k2,2rn kraken2_report.tsv  | grep G | head
+
+#krona
+
+ktUpdateTaxonomy.sh --only-build kraken2/silva/taxonomy/
+
+ktImportTaxonomy -o krona_report.html -t 5 -m 3 -tax kraken2/silva/taxonomy/ kraken2_report_trimmed_paired.tsv
 
 ````
 
@@ -125,7 +131,7 @@ condition2[tab]sample5
 
 condition2[tab]sample6
 
-- convert the matrix from csv to tsv
+- convert the matrix from csv to matrix
 ````bash
 sed 's/,/\t/g' gene_count_matrix.csv > gene_count.matrix
 OR
@@ -184,13 +190,13 @@ export PATH=$PATH:trinityrnaseq/Analysis/DifferentialExpression/
 
 
 ````bash
-run_DE_analysis.pl --matrix gene_count.matrix --samples_file config_DE.txt --reference_sample T0 --method edgeR --output edgeR_genes
+run_DE_analysis.pl --matrix transcript_count.matrix --samples_file config_DE.txt --reference_sample T0 --method edgeR --output edgeR_genes
 ````
 
 #### DESeq2
 
 ````bash
-run_DE_analysis.pl --matrix gene_count.matrix  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
+run_DE_analysis.pl --matrix transcript_count.matrix  --samples_file config_DE.txt --reference_sample T0 --method DESeq2 --output DESeq2_genes
 ````
 #### subsetting DE
 
@@ -198,7 +204,7 @@ run_DE_analysis.pl --matrix gene_count.matrix  --samples_file config_DE.txt --re
 
 ````bash
 cd DESeq2_genes
-analyze_diff_expr.pl --matrix ../gene_count.matrix --samples ../config_DE.txt -P 0.05 -C 2
+analyze_diff_expr.pl --matrix ../transcript_count.matrix --samples ../config_DE.txt -P 0.05 -C 2
 ````
 
 
