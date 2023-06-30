@@ -212,14 +212,24 @@ analyze_diff_expr.pl --matrix ../transcript_count.matrix --samples ../config_DE.
 #will be using Trinotate through singularity
 
 ````bash
-wget https://data.broadinstitute.org/Trinity/TRINOTATE_SINGULARITY/trinotate.v4.0.1.simg
-singularity shell -e trinotate.v4.0.1.simg  
-export TRINOTATE_HOME=/usr/local/src/Trinotate
-$TRINOTATE_HOME/Trinotate
+docker pull trinityrnaseq/trinotate
+
+docker run --rm -it -v `pwd`:/data -v /tmp:/tmp -e TRINOTATE_HOME=/usr/local/src/Trinotate trinityrnaseq/trinotate bash
+
+export PATH=$PATH:/usr/local/src/Trinotate/
 ````
 #TMHMM and  signalp installed sepra.
-pip3 install pybiolib
-biolib run --local DTU/DeepTMHMM --fasta input.fasta
+- download TMHMM
+  https://services.healthtech.dtu.dk/services/TMHMM-2.0/
+tar -xzf tmhmm-2.0c.Linux.tar.gz
+which perl
+add perl path in tmhmm-2.0c/bin/tmhmmformat.pl
+export PATH=$PATH:tmhmm-2.0c/bin/
+tmhmm --short $transdecoder_pep > tmhmm.v2.out
+Trinotate --db $sqlite_db --LOAD_tmhmmv2 tmhmm.v2.out
 
+
+signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --organism euk --mode fast
+Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
 https://github.com/fteufel/signalp-6.0/blob/main/installation_instructions.md
 
