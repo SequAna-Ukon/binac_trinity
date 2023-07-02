@@ -254,3 +254,11 @@ signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --
 
 Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
 ````
+export PATH=/data/eggnog-mapper:/data/eggnog-mapper/eggnogmapper/bin:"$PATH"
+export PATH=$PATH:/data/eggnog-mapper
+
+Trinotate --create --db cap_Trinotate.sqlite --trinotate_data_dir cap_Trinotate --use_diamond
+
+Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.pp --trinotate_data_dir cap_Trinotate --run ALL --use_diamond
+
+               
