@@ -231,5 +231,9 @@ Trinotate --db $sqlite_db --LOAD_tmhmmv2 tmhmm.v2.out
 
 signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --organism euk --mode fast
 Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
-https://github.com/fteufel/signalp-6.0/blob/main/installation_instructions.md
 
+download at https://services.healthtech.dtu.dk/service.php?SignalP-6.0.
+tar -xzf
+pip install signalp-6-package/
+SIGNALP_DIR=$(python3 -c "import signalp; import os; print(os.path.dirname(signalp.__file__))" )
+cp -r signalp-6-package/models/* $SIGNALP_DIR/model_weights/
