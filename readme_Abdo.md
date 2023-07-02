@@ -272,4 +272,3 @@ util/annotation_importer/import_transcript_names.pl cap_Trinotate.sqlite cap_Tri
 
 ./run_TrinotateWebserver.pl 8080
 
-     
