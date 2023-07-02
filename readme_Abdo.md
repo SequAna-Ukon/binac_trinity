@@ -223,6 +223,7 @@ export PATH=$PATH:/usr/local/src/Trinotate/
 - download TMHMM
 
 https://services.healthtech.dtu.dk/services/TMHMM-2.0/
+````bash
 
 tar -xzf tmhmm-2.0c.Linux.tar.gz
 
@@ -235,13 +236,11 @@ export PATH=$PATH:tmhmm-2.0c/bin/
 tmhmm --short $transdecoder_pep > tmhmm.v2.out
 
 Trinotate --db $sqlite_db --LOAD_tmhmmv2 tmhmm.v2.out
+````
+- download
+https://services.healthtech.dtu.dk/service.php?SignalP-6.0.
 
-
-signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --organism euk --mode fast
-
-Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
-
-download at https://services.healthtech.dtu.dk/service.php?SignalP-6.0.
+````bash
 
 tar -xzf signalp-6.0h.fast.tar.gz
 
@@ -250,3 +249,8 @@ pip install signalp-6-package/
 SIGNALP_DIR=$(python3 -c "import signalp; import os; print(os.path.dirname(signalp.__file__))" )
 
 cp -r signalp-6-package/models/* $SIGNALP_DIR/model_weights/
+
+signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --organism euk --mode fast
+
+Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
+````
