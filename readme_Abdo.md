@@ -296,7 +296,7 @@ analyze_diff_expr.pl --matrix ../Trinity_trans.counts.wAnnot.matrix --samples ..
   
 ````bash
 
-Trinotate/util/transcript_expression/import_expression_and_DE_results.pl --sqlite cap_Trinotate.sqlite --samples_file config_DE.txt --count_matrix transcript_count.matrix --DE_dir DESeq2_transcript/ --transcript_mode
+Trinotate/util/transcript_expression/import_expression_and_DE_results.pl --sqlite cap_Trinotate.sqlite --samples_file config_DE.txt --count_matrix Trinity_trans.counts.wAnnot.matrix --DE_dir DESeq2_transcript/ --transcript_mode
                
 Trinotate/util/transcript_expression/import_transcript_clusters.pl --group_name DESeq2_DE_analysis --analysis_name DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20 --sqlite cap_Trinotate.sqlite DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20/*matrix
 
