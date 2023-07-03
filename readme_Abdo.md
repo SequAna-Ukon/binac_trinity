@@ -38,7 +38,7 @@ while read i;do fastp -w 26 -q 28 -i raw_reads/raw_seq_data/$i/${i}_1.fq.gz -I r
 ## Transcriptome Assembly Quality Assessment
 -- needs to install star, busco and trinity
 
-- Examine the RNA-Seq read representation of the assembly. Ideally, at least ~80% of your input RNA-Seq reads are represented by your transcriptome assembly. The remaining unassembled reads likely corresponds to lowly expressed transcripts with insufficient coverage to enable assembly, or are low quality or aberrant reads. (will already go through after star alignments)
+- Examine the RNA-Seq read representation of the assembly. Ideally, at least ~80% of your input RNA-Seq reads are represented by your transcriptome assembly. The remaining unassembled reads likely to correspond to lowly expressed transcripts with insufficient coverage to enable assembly, or are low quality or aberrant reads. (will already go through after star alignments)
 
 
 
@@ -271,7 +271,7 @@ Trinotate --db cap_Trinotate.sqlite --LOAD_tmhmmv2 tmhmm.v2.out
 Trinotate --db cap_Trinotate.sqlite --LOAD_signalp sigP6outdir/output.gff3
 
 
-Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.transdecoder.pep --trinotate_data_dir cap_Trinotate --run ALL --use_diamond
+Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.transdecoder.pep --trinotate_data_dir cap_Trinotate --run "swissprot_blastp swissprot_blastx pfam infernal EggnogMapper" --use_diamond
 
 Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.xls
 
