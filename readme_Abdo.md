@@ -210,7 +210,11 @@ define_clusters_by_cutting_tree.pl -R  diffExpr.P0.05_C2.matrix.RData --Ptree 60
 
 ### Trinotate Functional Annotation
 
-#will be using Trinotate through singularity
+- notes from Ben about singularity in BINAC
+To run singularity on BINAC, you'll need to install it in your Home File System. Then you'll need to set the SINGULARITY_CACHE_DIR environmental variable, for example: export SINGULARITY_CACHEDIR=/beegfs/work/kn_pop528802/.singularity It is a good idea to put this line in your .bashrc file so that you don't have to remember to set it each time. N.B. your SINGULARITY_CACHE_DIR cannot be in your Home File Sytem but must be in your Work File System.
+
+
+#will be using Trinotate through docker
 
 ````bash
 docker pull trinityrnaseq/trinotate
