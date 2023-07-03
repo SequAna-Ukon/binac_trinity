@@ -234,13 +234,12 @@ tar -xzf tmhmm-2.0c.Linux.tar.gz
 
 which perl
 
-add perl path in tmhmm-2.0c/bin/tmhmmformat.pl
+add perl path in tmhmm-2.0c/bin/tmhmmformat.pl and tmhmm-2.0c/bin/tmhmm
 
 export PATH=$PATH:tmhmm-2.0c/bin/
 
-tmhmm --short $transdecoder_pep > tmhmm.v2.out
+tmhmm --short 1.Trinity.fasta.transdecoder.pep > tmhmm.v2.out
 
-Trinotate --db $sqlite_db --LOAD_tmhmmv2 tmhmm.v2.out
 ````
 - download signalp-6
   
@@ -256,9 +255,8 @@ SIGNALP_DIR=$(python3 -c "import signalp; import os; print(os.path.dirname(signa
 
 cp -r signalp-6-package/models/* $SIGNALP_DIR/model_weights/
 
-signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --organism euk --mode fast
+signalp6 --fastafile 1.Trinity.fasta.transdecoder.pep --output_dir sigP6outdir --format none --organism euk --mode fast
 
-Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
 ````
 - Trinotate commands
 ````bash
@@ -267,6 +265,11 @@ export PATH=/data/eggnog-mapper:/data/eggnog-mapper/eggnogmapper/bin:"$PATH"
 export PATH=$PATH:/data/eggnog-mapper
 
 Trinotate --create --db cap_Trinotate.sqlite --trinotate_data_dir cap_Trinotate --use_diamond
+
+Trinotate --db cap_Trinotate.sqlite --LOAD_tmhmmv2 tmhmm.v2.out
+
+Trinotate --db cap_Trinotate.sqlite --LOAD_signalp sigP6outdir/output.gff3
+
 
 Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.pp --trinotate_data_dir cap_Trinotate --run ALL --use_diamond
 
