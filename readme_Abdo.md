@@ -282,6 +282,13 @@ Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.xls
 Trinotate/util/Trinotate_get_feature_name_encoding_attributes.pl cap_Trinotate.xls  > annot_feature_map.txt
 
 trinityrnaseq/Analysis/DifferentialExpression/rename_matrix_feature_identifiers.pl transcript_count.matrix annot_feature_map.txt > Trinity_trans.counts.wAnnot.matrix
+
+Trinotate/util/extract_GO_assignments_from_Trinotate_xls.pl --Trinotate_xls cap_Trinotate.xls -G --include_ancestral_terms > go_annotations.txt
+
+trinityrnaseq/util/misc/fasta_seq_length.pl  1.Trinity.fasta > Trinity.fasta.seq_lens
+
+analyze_diff_expr.pl --matrix ../Trinity_trans.counts.wAnnot.matrix --samples ../config_DE.txt -P 0.05 -C 2 --examine_GO_enrichment --GO_annots go_annotations.txt --gene_lengths Trinity.fasta.seq_lens --output DE_annotation
+
 ````
 
 - TrinotateWeb
