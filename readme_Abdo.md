@@ -271,9 +271,10 @@ Trinotate --db cap_Trinotate.sqlite --LOAD_tmhmmv2 tmhmm.v2.out
 Trinotate --db cap_Trinotate.sqlite --LOAD_signalp sigP6outdir/output.gff3
 
 
-Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.pp --trinotate_data_dir cap_Trinotate --run ALL --use_diamond
+Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.transdecoder.pep --trinotate_data_dir cap_Trinotate --run ALL --use_diamond
 
 Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.xls
+
 ````
 - update the counting matrix with the annotation that can be used for downstream analysis steps, such as differential expression analysis.
 
