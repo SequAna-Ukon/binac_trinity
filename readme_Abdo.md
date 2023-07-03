@@ -202,7 +202,7 @@ run_DE_analysis.pl --matrix transcript_count.matrix  --samples_file config_DE.tx
 - for edgeR and DESeq2 and with 4 fold of change and Pvalue 0.05 
 
 ````bash
-cd DESeq2_genes
+cd DESeq2_transcript
 analyze_diff_expr.pl --matrix ../transcript_count.matrix --samples ../config_DE.txt -P 0.05 -C 2
 define_clusters_by_cutting_tree.pl -R  diffExpr.P0.05_C2.matrix.RData --Ptree 60
 ````
