@@ -255,6 +255,9 @@ signalp6 --fastafile $transdecoder_pep --output_dir sigP6outdir --format none --
 
 Trinotate --db $sqlite_db --LOAD_signalp sigP6outdir/output.gff3
 ````
+- Trinotate commands
+````bash
+
 export PATH=/data/eggnog-mapper:/data/eggnog-mapper/eggnogmapper/bin:"$PATH"
 export PATH=$PATH:/data/eggnog-mapper
 
@@ -264,6 +267,12 @@ Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta 
 
 Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.tsv
 
+````
+
+- TrinotateWeb
+  
+````bash
+
 util/transcript_expression/import_expression_and_DE_results.pl --sqlite cap_Trinotate.sqlite --samples_file samples_n_reads_described.txt --count_matrix transcript_count.matrix --DE_dir DESeq2_transcript/ --transcript_mode
                
 util/transcript_expression/import_transcript_clusters.pl --group_name DESeq2_DE_analysis --analysis_name DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20 --sqlite cap_Trinotate.sqlite DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20/*matrix
@@ -271,4 +280,5 @@ util/transcript_expression/import_transcript_clusters.pl --group_name DESeq2_DE_
 util/annotation_importer/import_transcript_names.pl cap_Trinotate.sqlite cap_Trinotate.tsv
 
 ./run_TrinotateWebserver.pl 8080
+````
 
