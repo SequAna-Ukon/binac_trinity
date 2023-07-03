@@ -238,7 +238,8 @@ tmhmm --short $transdecoder_pep > tmhmm.v2.out
 
 Trinotate --db $sqlite_db --LOAD_tmhmmv2 tmhmm.v2.out
 ````
-- download
+- download signalp-6
+  
 https://services.healthtech.dtu.dk/service.php?SignalP-6.0.
 
 ````bash
