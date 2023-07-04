@@ -266,6 +266,8 @@ export PATH=$PATH:/data/eggnog-mapper
 
 Trinotate --create --db cap_Trinotate.sqlite --trinotate_data_dir cap_Trinotate --use_diamond
 
+Trinotate --db cap_Trinotate.sqlite --init --gene_trans_map 1.gene_trans_map --transcript_fasta 1.Trinity.fasta --transdecoder_pep 1.Trinity.fasta.transdecoder.pep 
+
 Trinotate --db cap_Trinotate.sqlite --LOAD_tmhmmv2 tmhmm.v2.out
 
 Trinotate --db cap_Trinotate.sqlite --LOAD_signalp sigP6outdir/output.gff3
