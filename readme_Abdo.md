@@ -80,7 +80,7 @@ generate_plot.py -wd busco_plot/
 -- install TransDecoder and agat
 
 ````bash
-TransDecoder.LongOrfs -t Trinity.fasta
+TransDecoder.LongOrfs -t 1.Trinity.fasta
 TransDecoder.Predict -t Trinity.fasta
 #convert_from_gff_to_gtf (because star and stringtie reuired gtf)
 agat_convert_sp_gff2gtf.pl -gff 1.Trinity.fasta.transdecoder.gff3 -o Trinity.fasta.transdecoder_agat.gtf
@@ -282,13 +282,9 @@ Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.xls
 
 ````bash
 
-Trinotate/util/Trinotate_get_feature_name_encoding_attributes.pl cap_Trinotate.xls  > annot_feature_map.txt
+Trinotate/util/extract_GO_assignments_from_Trinotate_xls.pl --Trinotate_xls cap_Trinotate.xls -T --include_ancestral_terms > go_annotations.txt
 
-trinityrnaseq/Analysis/DifferentialExpression/rename_matrix_feature_identifiers.pl transcript_count.matrix annot_feature_map.txt > Trinity_trans.counts.wAnnot.matrix
-
-Trinotate/util/extract_GO_assignments_from_Trinotate_xls.pl --Trinotate_xls cap_Trinotate.xls -G --include_ancestral_terms > go_annotations.txt
-
-trinityrnaseq/util/misc/fasta_seq_length.pl  1.Trinity.fasta > Trinity.fasta.seq_lens
+trinityrnaseq/util/misc/fasta_seq_length.pl  1.Trinity.fasta.transdecoder.pep > Trinity.fasta.seq_lens
 
 analyze_diff_expr.pl --matrix ../Trinity_trans.counts.wAnnot.matrix --samples ../config_DE.txt -P 0.05 -C 2 --examine_GO_enrichment --GO_annots go_annotations.txt --gene_lengths Trinity.fasta.seq_lens --output DE_annotation
 
