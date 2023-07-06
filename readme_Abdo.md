@@ -278,28 +278,15 @@ Trinotate --db cap_Trinotate.sqlite --CPU 50 --transcript_fasta 1.Trinity.fasta 
 Trinotate --db cap_Trinotate.sqlite --report > cap_Trinotate.xls
 
 ````
-- update the counting matrix with the annotation that can be used for downstream analysis steps, such as differential expression analysis.
+
+
+- covert annotation file to html
 
 ````bash
-
-Trinotate/util/extract_GO_assignments_from_Trinotate_xls.pl --Trinotate_xls cap_Trinotate.xls -T --include_ancestral_terms > go_annotations.txt
-
-trinityrnaseq/util/misc/fasta_seq_length.pl  1.Trinity.fasta.transdecoder.pep > Trinity.fasta.seq_lens
-
-analyze_diff_expr.pl --matrix ../Trinity_trans.counts.wAnnot.matrix --samples ../config_DE.txt -P 0.05 -C 2 --examine_GO_enrichment --GO_annots go_annotations.txt --gene_lengths Trinity.fasta.seq_lens --output DE_annotation
-
+install.packages('remotes') 
+remotes::install_github('rstudio/DT')
+library(DT)
+data <- as.matrix(read.table("Desmodesmus_quadricauda.annotations.tsv", sep = '\t', header = TRUE, fill = TRUE))
+Dqua_DT <- datatable(data)
+saveWidget(Dqua_DT, "Dqua_DT.html", selfcontained = TRUE, libdir = NULL, title = "Desmodesmus_quadricauda.annotations", knitrOptions = list())
 ````
-
-- TrinotateWeb
-  
-````bash
-
-Trinotate/util/transcript_expression/import_expression_and_DE_results.pl --sqlite cap_Trinotate.sqlite --samples_file config_DE.txt --count_matrix Trinity_trans.counts.wAnnot.matrix --DE_dir DESeq2_transcript/ --transcript_mode
-               
-Trinotate/util/transcript_expression/import_transcript_clusters.pl --group_name DESeq2_DE_analysis --analysis_name DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20 --sqlite cap_Trinotate.sqlite DESeq2_transcript/diffExpr.P0.005_C2.matrix.R.all.RData.clusters_fixed_P_20/*matrix
-
-Trinotate/util/annotation_importer/import_transcript_names.pl cap_Trinotate.sqlite cap_Trinotate.tsv
-
-./run_TrinotateWebserver.pl 8080
-````
-
