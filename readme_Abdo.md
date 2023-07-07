@@ -291,22 +291,36 @@ Dqua_DT <- datatable(data)
 saveWidget(Dqua_DT, "cap_Trinotate.html", selfcontained = TRUE, libdir = NULL, title = "Captiva.annotations", knitrOptions = list())
 ````
 - GSEA using goatools
+
 https://github.com/tanghaibao/goatools/tree/main
 
+````bash
+
 wget http://current.geneontology.org/ontology/go-basic.obo
+
 wget http://current.geneontology.org/ontology/subsets/goslim_generic.obo
 
 pip install goatools
 
-- preparing of assioation/gene2go file "trans_GO_egg.txt"
+````
+
+- preparing of association/gene2go file "trans_GO_egg.txt"
+````bash
   cut -f1,10 cap_Trinotate.xls| sed 's/,/;/g' > trans_GO_egg.txt
-- preparing of study file 
-- just list of the target DE subsets
+````
+
+- preparing of study file, just list of the target DE subsets
+
 - preparing of population file "trans_all.ids"
+````bash
   grep '>' 1.Trinity.fasta.transdecoder.pep |sed 's/>//g' > trans_all.ids
+````
   
+
 - run find_enrichment.py script on each subset
+````bash
 find_enrichment.py T0_vs_T180_B_Down.ls trans_all.ids  ../trans_GO_egg.txt  --outfile T0_vs_T180_B.depl.xls
+````
 
 - ".depl" for depleted and ".enr" for enriched.
 - you can filter on the significance of (e)nrichment or (p)urification. it can report various multiple testing corrected p-values as well as the false discovery rate. The e in the "Enrichment" column means "enriched" - the concentration of GO term in the study group is significantly higher than those in the population. The "p" stands for "purified" - significantly lower concentration of the GO term in the study group than in the population.
