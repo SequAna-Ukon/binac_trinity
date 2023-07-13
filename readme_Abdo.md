@@ -295,11 +295,11 @@ saveWidget(Dqua_DT, "cap_Trinotate.html", selfcontained = TRUE, libdir = NULL, t
 https://github.com/tanghaibao/goatools/tree/main
 
 ````bash
+#download GO plant subset database
 
-wget http://current.geneontology.org/ontology/go-basic.obo
-
-wget http://current.geneontology.org/ontology/subsets/goslim_generic.obo
-
+wget http://current.geneontology.org/ontology/subsets/goslim_plant.obo
+#rename it as go-basic
+mv goslim_plant.obo go-basic.obo 
 pip install goatools
 
 ````
